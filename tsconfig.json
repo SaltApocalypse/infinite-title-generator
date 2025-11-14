@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "Node",
     "module": "ESNext",
     "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "skipLibCheck": true,
-    "strictNullChecks": true
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src", "env.d.ts"]
 }
