@@ -1,16 +1,20 @@
 {
-  "name": "salted-bincan",
+  "name": "infinite-title-generator",
   "version": "0.1.0",
-  "description": "No description... still processing",
-  "main": "index.js",
+  "description": "Halo Infinite 风格 SVG 标题动画生成器（Vite + React + TanStack Router + GSAP）",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite dev",
     "build": "vite build",
+    "preview": "vite preview",
     "fix": "eslint . --ext .ts,.tsx --fix && prettier --write ."
   },
-  "keywords": [],
+  "keywords": [
+    "halo-infinite",
+    "svg",
+    "animation",
+    "gsap"
+  ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.19.0",
@@ -18,8 +22,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-router": "^1.136.1",
     "@tanstack/react-router-devtools": "^1.136.1",
-    "@tanstack/react-start": "^1.136.1",
-    "@types/three": "^0.181.0",
+    "gsap": "^3.13.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.17"
@@ -27,6 +30,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.39.1",
+    "@tanstack/router-plugin": "^1.136.1",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.4",

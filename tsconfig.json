@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "moduleResolution": "Node",
     "module": "ESNext",
     "target": "ES2022",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
