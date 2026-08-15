@@ -26,3 +26,9 @@
 - **Hover 动画时长约定：所有按钮/按钮效果组件的 hover 过渡统一为 `500ms`**。
     - 装饰线条（括号、出头、上下边缘）使用 `transition-all duration-500 ease-out`；
     - 按钮本身使用 `duration-500`，覆盖 daisyUI 默认的 `200ms`，使底色变亮与线条动画节奏一致。
+
+## 图标（Lucide）
+
+- 图标统一使用 `lucide-react`。
+- **一律以组件（Icon）形式使用，组件名使用 Icon 版本**（如 `PencilLine`、`Settings`、`Info`），以便与普通文本/内容区分，避免直接写图标名称字符串。
+- 示例：tab 按钮图标以 `<PencilLine className="h-5 w-5" />` 方式渲染，并作为 `LSFTabItem.icon` 传入。
