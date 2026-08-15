@@ -1,1 +1,86 @@
 @import "tailwindcss";
+
+/* =====================================================================
+ * 设计系统：LightSciFi（科幻淡蓝配色）
+ *
+ * 配色基于 daisyUI 5（Tailwind v4 插件）承载：
+ *   1. @plugin "daisyui"        —— 引入组件/工具类；关闭内置主题（只保留自定义 LightSciFi）
+ *   2. @plugin "daisyui/theme"  —— 定义 SaltaSciFi 主题 token（daisyui 编辑器同款范围）
+ *   3. @theme                   —— daisyUI 未覆盖的扩展 token（按需生成，用到才输出）
+ *
+ * 配色统一以 daisyUI 主题 token 为准；JS/SVG/GSAP 侧请引用 src/theme/tokens.ts（保持同步）
+ * ===================================================================== */
+
+@plugin "daisyui" {
+  themes: false;
+  logs: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "saltascifi";
+  default: true;
+  color-scheme: "dark";
+
+  /* 基础表面（深空背景） */
+  --color-base-100: #0b1120;
+  --color-base-200: #111827;
+  --color-base-300: #1f2937;
+  --color-base-content: #d7f5ff;
+
+  /* 主色：能量淡蓝 */
+  --color-primary: #3dc6ff;
+  --color-primary-content: #08101e;
+
+  /* 副色：传感器青 */
+  --color-secondary: #5eead4;
+  --color-secondary-content: #04211c;
+
+  /* 强调：电感紫 */
+  --color-accent: #818cf8;
+  --color-accent-content: #0d1024;
+
+  /* 中性 */
+  --color-neutral: #8b98a8;
+  --color-neutral-content: #0a1018;
+
+  /* 状态色 */
+  --color-info: #38bdf8;
+  --color-info-content: #082f49;
+  --color-success: #4ade80;
+  --color-success-content: #052e16;
+  --color-warning: #fbbf24;
+  --color-warning-content: #451a03;
+  --color-error: #f87171;
+  --color-error-content: #450a0a;
+
+  /* daisyUI 组件所需的形状/边框 token */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@theme {
+  /* daisyUI 主题未覆盖的扩展 token */
+  --color-primary-strong: #12a9f0;
+}
+
+@layer base {
+  body {
+    @apply bg-base-100 text-base-content antialiased;
+  }
+}
+
+/* 背景点阵装饰：科幻风格网格点（主色，低透明度） */
+@utility bg-dot-grid {
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-primary) 12%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
