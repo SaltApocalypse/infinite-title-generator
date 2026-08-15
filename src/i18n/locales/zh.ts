@@ -2,8 +2,9 @@ export default {
   tabs: {
     title: "标题",
     titleGenerator: "Infinite Title Generator",
-    titleDesc: "",
     settings: "设置",
+    skulls: "骷髅头",
+    skullsTitle: "骷髅头",
     about: "关于",
     aboutIntro: "Infinite Title Generator 为受 Halo Infinite 启发制作的粉丝项目。",
     aboutDisclaimer:
@@ -11,5 +12,13 @@ export default {
   },
   settings: {
     language: "语言",
+  },
+  page: {
+    inputLabel: "标题",
+    inputPlaceholder: "输入标题...",
+  },
+  toggle: {
+    on: "开",
+    off: "关",
   },
 };

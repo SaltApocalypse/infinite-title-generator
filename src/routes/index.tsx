@@ -1,35 +1,52 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Globe, Info, PencilLine, Settings } from "lucide-react";
+import { Globe, Info, PencilLine, Settings, Skull } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import Page from "../components/Page";
-import { LSFDropdown, LSFSidebar } from "../components/ui";
+import { LSFDropdown, LSFInput, LSFLightButton, LSFSidebar } from "../components/ui";
+import { SAMPLE } from "../constants/constants";
 import { changeLanguage, getCurrentLang, type Lang, LANGUAGES } from "../i18n";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
-// 语言切换按钮：右上角（测试用），点击在 中文 / English 之间切换
+// 语言切换按钮：右上角，点击在 中文 / English 之间切换（复用轻量按钮组件）
 function LanguageToggle() {
   const { i18n } = useTranslation();
   const isZh = i18n.language.toLowerCase().startsWith("zh");
 
   return (
-    <button
-      type="button"
+    <LSFLightButton
+      className="fixed right-4 top-4 z-30"
       onClick={() => changeLanguage(isZh ? "en" : "zh")}
-      className="fixed right-4 top-4 z-30 flex items-center gap-1.5 rounded-none border border-primary/50 px-3 py-1 text-xs uppercase tracking-widest text-primary transition-colors duration-500 hover:bg-primary/15"
       aria-label={isZh ? "Switch to English" : "切换到中文"}
     >
       <Globe className="h-3.5 w-3.5" />
       {isZh ? "EN" : "中文"}
-    </button>
+    </LSFLightButton>
   );
 }
 
 function RouteComponent() {
   const { t } = useTranslation();
+  // 标题输入状态 + 防抖（停止输入 1s 后驱动动画重建）
+  const [input, setInput] = useState(SAMPLE);
+  const [debouncedInput, setDebouncedInput] = useState(input);
+  const debounceTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
+    debounceTimer.current = window.setTimeout(() => setDebouncedInput(input), 1000);
+    return () => {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
+    };
+  }, [input]);
 
   // 侧边栏 tabs：内容呈现在浮层中（主页面动画常显，文本随语言切换）
   const tabs = [
@@ -38,9 +55,29 @@ function RouteComponent() {
       label: t("tabs.title"),
       icon: PencilLine,
       content: (
-        <div className="max-w-xs">
+        <div className="w-full">
           <h2 className="mb-2 text-base font-semibold text-primary">{t("tabs.titleGenerator")}</h2>
-          <p className="text-sm leading-relaxed">{t("tabs.titleDesc")}</p>
+          {/* 输入行：左 Key 右 Value（参考设置页语言行） */}
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-sm text-base-content">{t("page.inputLabel")}</span>
+            <LSFInput
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={t("page.inputPlaceholder")}
+              className="w-40"
+            />
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "skulls",
+      label: t("tabs.skulls"),
+      icon: Skull,
+      content: (
+        <div className="w-full">
+          {/* 大标题：骷髅头 / SKULLS（随语言切换，尺寸与其他页面一致） */}
+          <h2 className="text-base font-semibold text-primary">{t("tabs.skullsTitle")}</h2>
         </div>
       ),
     },
@@ -82,7 +119,7 @@ function RouteComponent() {
 
   return (
     <div style={{ overflow: "hidden" }}>
-      <Page />
+      <Page title={debouncedInput} />
       <LSFSidebar tabs={tabs} defaultTabId="title" />
       <LanguageToggle />
     </div>

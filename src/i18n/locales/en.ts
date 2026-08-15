@@ -2,8 +2,9 @@ export default {
   tabs: {
     title: "Title",
     titleGenerator: "Infinite Title Generator",
-    titleDesc: "",
     settings: "Settings",
+    skulls: "Skulls",
+    skullsTitle: "SKULLS",
     about: "About",
     aboutIntro: "Infinite Title Generator is a fan-made project inspired by Halo Infinite.",
     aboutDisclaimer:
@@ -11,5 +12,13 @@ export default {
   },
   settings: {
     language: "Language",
+  },
+  page: {
+    inputLabel: "Title",
+    inputPlaceholder: "Enter title...",
+  },
+  toggle: {
+    on: "ON",
+    off: "OFF",
   },
 };
