@@ -67,6 +67,19 @@
 @theme {
   /* daisyUI 主题未覆盖的扩展 token */
   --color-primary-strong: #12a9f0;
+  /* 浮层页面切换：内容从下往上显现（与浮层滑出方向一致） */
+  --animate-lsf-page-in: lsf-page-in 0.45s ease-out;
+
+  @keyframes lsf-page-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
 @layer base {

@@ -1,4 +1,4 @@
-/** SaltsSciFi UI 组件统一出口（组件统一使用 LSF 前缀，标识 Light Sci-Fi 自研风格） */
+/** SaltsSciFi UI 组件统一出口 */
 export type { LSFButtonProps } from "./LSFButton";
 export { LSFButton } from "./LSFButton";
 export type { LSFDropdownOption, LSFDropdownProps } from "./LSFDropdown";
@@ -9,5 +9,9 @@ export type { LSFLightButtonProps } from "./LSFLightButton";
 export { LSFLightButton } from "./LSFLightButton";
 export type { LSFSidebarProps, LSFTabItem } from "./LSFSidebar";
 export { LSFSidebar } from "./LSFSidebar";
+export type { LSFSliderProps } from "./LSFSlider";
+export { LSFSlider } from "./LSFSlider";
 export type { LSFToggleProps } from "./LSFToggle";
 export { LSFToggle } from "./LSFToggle";
+export type { LSFTooltipProps } from "./LSFTooltip";
+export { LSFTooltip } from "./LSFTooltip";

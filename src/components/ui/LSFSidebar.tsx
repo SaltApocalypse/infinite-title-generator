@@ -2,7 +2,7 @@ import { type LucideIcon } from "lucide-react";
 import { type ReactNode, useState } from "react";
 
 /**
- * LSFSidebar（LSF = Light Sci-Fi）
+ * LSFSidebar
  *
  * SaltsSciFi 设计系统下的左侧内容呈现侧边栏。
  * - 最左侧：48×48（w-12 h-12，尺寸取自点阵四点围成的最小正方形）直角方形 tab 按钮列，
@@ -65,7 +65,7 @@ export function LSFSidebar({ tabs, defaultTabId, className }: LSFSidebarProps) {
       </nav>
 
       {/* 内容浮层：固定宽度，从下方切入（translate-y），贴紧按钮与内容，[] 边框（左右竖线 + 上下四角出头） */}
-      <div className="relative w-64 translate-y-[8px] rounded-none bg-base-200/80 px-4 py-3 text-sm opacity-0 shadow-lg transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 xl:w-80">
+      <div className="relative w-80 translate-y-2 rounded-none bg-base-200/80 px-4 py-3 text-sm opacity-0 shadow-lg transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 xl:w-100">
         {/* 左右括号竖线（贴边） */}
         <span
           aria-hidden
@@ -92,7 +92,10 @@ export function LSFSidebar({ tabs, defaultTabId, className }: LSFSidebarProps) {
           aria-hidden
           className="pointer-events-none absolute bottom-0 right-0 h-px w-3 bg-primary"
         />
-        {activeTab?.content}
+        {/* 内容页面：切换 tab 时从下往上显现（key=activeId 触发动画重放，方向与浮层滑出一致） */}
+        <div key={activeId} className="animate-lsf-page-in">
+          {activeTab?.content}
+        </div>
       </div>
     </aside>
   );

@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 /**
- * LSFButton（LSF = Light Sci-Fi）
+ * LSFButton
  *
  * LightSciFi 设计系统下的科幻按钮，基于 daisyUI `btn btn-primary`。
  *

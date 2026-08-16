@@ -1,7 +1,7 @@
 import { type InputHTMLAttributes, type ReactNode } from "react";
 
 /**
- * LSFInput（LSF = Light Sci-Fi）
+ * LSFInput
  *
  * SaltsSciFi 设计系统下基于 daisyUI `input` 的输入框组件。
  * - 基底：daisyUI `.input` + `input-primary`（focus 边框/描边转主色）+ 直角
@@ -9,7 +9,8 @@ import { type InputHTMLAttributes, type ReactNode } from "react";
  * - 支持 prefix / suffix（label 包裹模式，点击可聚焦）
  * - 命名组 group/input + group-focus-within，仅响应本输入框聚焦
  */
-export interface LSFInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface LSFInputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "prefix" | "suffix"> {
   /** 前置图标/内容（点击聚焦） */
   prefix?: ReactNode;
   /** 后置图标/内容 */

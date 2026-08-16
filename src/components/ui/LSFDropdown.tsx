@@ -2,7 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 /**
- * LSFDropdown（LSF = Light Sci-Fi）
+ * LSFDropdown
  *
  * SaltsSciFi 设计系统下的下拉选项组件。
  * - 触发器：SaltsSciFi 配色（主色边框/文字 + 主色淡底），直角边框，内容最右侧为 chevron-down 图标
@@ -12,6 +12,8 @@ import { useEffect, useRef, useState } from "react";
 export interface LSFDropdownOption {
   value: string;
   label: string;
+  /** 禁用该选项（置灰、不可选中，用于"暂未开放"的选项） */
+  disabled?: boolean;
 }
 
 export interface LSFDropdownProps {
@@ -91,6 +93,19 @@ export function LSFDropdown({
         >
           {options.map((opt) => {
             const isSelected = opt.value === selected;
+            // 禁用选项：置灰、不可点击
+            if (opt.disabled) {
+              return (
+                <div
+                  key={opt.value}
+                  role="option"
+                  aria-disabled="true"
+                  className="w-full cursor-not-allowed rounded-none px-3 py-2 text-left text-sm text-neutral/50"
+                >
+                  {opt.label}
+                </div>
+              );
+            }
             // 命名 group（group/option）：避免被外层（如侧边栏 aside 的 group）的 hover 触发
             return (
               <button
