@@ -4,7 +4,7 @@
 
 ## 命名约定
 
-- **LSF（Light Sci-Fi）**：本项目轻量科幻风格的前缀。所有自定义组件统一以 `LSF` 开头命名（如 `LSFButton`），文件描述标注「Light Sci-Fi」，以标识这是本项目的风格，而非第三方/官方样式。
+- **LSF**：自定义项目组件的前缀。所有自定义组件统一以 `LSF` 开头命名（如 `LSFButton`），以标识这是本项目的风格，而非第三方/官方样式。
 - **LightSciFi**：设计系统主题名，配色 token 基于 daisyUI 承载，定义于 `src/index.css`（`@plugin "daisyui/theme"`），JS 侧镜像见 `src/theme/tokens.ts`。
 
 ## 配色
