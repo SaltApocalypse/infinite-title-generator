@@ -63,6 +63,8 @@ function RouteComponent() {
   });
   // 调试：画布字符占位辅助开关（实际占用方块 + 声明宽度单元格轮廓）
   const [showPlaceholders, setShowPlaceholders] = useState(false);
+  // 调试：笔画拆解开关（竖线纯黄、横线纯蓝、透明度固定 50%）
+  const [strokeSplit, setStrokeSplit] = useState(false);
   // 调试：是否启用输入字符长度限制（默认开启 ≤14，关闭后无限输入）
   const [limitLength, setLimitLength] = useState(true);
   // 视图控制模式：设置页下拉选择（完整/精简[暂禁用]/无），控制右上角视图控制浮层
@@ -77,11 +79,10 @@ function RouteComponent() {
     { value: "none", label: t("view.modes.none") },
   ];
 
-  // 字体结构选项：由字符集注册表生成（优化集暂为占位，字形完成后再开放）
+  // 字体结构选项：由字符集注册表生成（优化集已开放选择）
   const fontOptions: LSFDropdownOption[] = CHARSETS.map((set) => ({
     value: set.id,
     label: t(set.labelKey),
-    disabled: set.id !== "basic",
   }));
 
   useEffect(() => {
@@ -279,7 +280,6 @@ function RouteComponent() {
                   <li>设置 &gt; 视图控制 &gt; 精简视图</li>
                   <li>导出功能</li>
                   <li>骷髅头实现</li>
-                  <li>字体结构优化</li>
                 </ul>
               </div>
             ),
@@ -323,6 +323,11 @@ function RouteComponent() {
                   <span className="text-sm text-base-content">{t("debug.placeholder")}</span>
                   <LSFToggle checked={showPlaceholders} onChange={setShowPlaceholders} />
                 </div>
+                {/* 笔画拆解开关：竖线纯黄/横线纯蓝/透明度 50% */}
+                <div className="mt-2 flex items-center justify-between gap-3">
+                  <span className="text-sm text-base-content">{t("debug.strokeSplit")}</span>
+                  <LSFToggle checked={strokeSplit} onChange={setStrokeSplit} />
+                </div>
                 {/* 字符长度限制开关：关闭后无限输入 */}
                 <div className="mt-2 flex items-center justify-between gap-3">
                   <span className="text-sm text-base-content">{t("debug.limitLength")}</span>
@@ -353,6 +358,7 @@ function RouteComponent() {
         viewControlMode={viewControlMode}
         startDelay={delay}
         charsetId={charsetId}
+        strokeSplit={strokeSplit}
       />
       <LSFSidebar tabs={tabs} defaultTabId="title" />
     </div>

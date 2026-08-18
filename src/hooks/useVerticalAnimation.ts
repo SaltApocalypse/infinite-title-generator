@@ -19,6 +19,8 @@ interface UseVerticalAnimationParams {
   startDelay: number;
   replayKey: number;
   randomizeKey: number;
+  /** 调试·笔画拆解：竖线固定纯黄色 + 50% 透明度（不做淡入） */
+  strokeSplit: boolean;
 }
 
 export function useVerticalAnimation({
@@ -28,6 +30,7 @@ export function useVerticalAnimation({
   startDelay,
   replayKey,
   randomizeKey,
+  strokeSplit,
 }: UseVerticalAnimationParams) {
   useEffect(() => {
     const timelines: gsap.core.Timeline[] = [];
@@ -58,7 +61,9 @@ export function useVerticalAnimation({
       lineEl.setAttribute("x2", String(initX2 + spreadOffset));
       lineEl.setAttribute("y2", String(initY2));
       lineEl.setAttribute("stroke-width", String(scale));
-      lineEl.style.opacity = "0";
+      // 笔画拆解：竖线固定纯黄色 + 50% 透明度；否则白色 + 初始透明度 0（由淡入动画接管）
+      lineEl.setAttribute("stroke", strokeSplit ? "#ffff00" : "#fff");
+      lineEl.style.opacity = strokeSplit ? "0.5" : "0";
 
       // GSAP 动画对象：x1/y1/x2/y2 为坐标（生长目标 = 最终布局），spread 为水平偏移（扩散目标 = 0）
       const state = {
@@ -141,15 +146,18 @@ export function useVerticalAnimation({
 
       // 透明度：按 delayAlpha 延时淡入（叠加延时播放），与生长相互独立
       // power1.out：早期快速显现，让线条在还较短时就可见（呈现完整生长过程）
-      tl.to(
-        lineEl,
-        {
-          opacity: 1,
-          duration: alphaDuration,
-          ease: "power1.out",
-        },
-        pauseAt + delayAlpha
-      );
+      // 笔画拆解模式跳过淡入，保持固定 50% 透明度
+      if (!strokeSplit) {
+        tl.to(
+          lineEl,
+          {
+            opacity: 1,
+            duration: alphaDuration,
+            ease: "power1.out",
+          },
+          pauseAt + delayAlpha
+        );
+      }
 
       timelines.push(tl);
     });
@@ -157,5 +165,5 @@ export function useVerticalAnimation({
     return () => {
       timelines.forEach((tl) => tl.kill());
     };
-  }, [verticalLines, lineRefs, scale, startDelay, replayKey, randomizeKey]);
+  }, [verticalLines, lineRefs, scale, startDelay, replayKey, randomizeKey, strokeSplit]);
 }

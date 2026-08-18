@@ -1,7 +1,6 @@
 import {
   HEIGHT_RATIO,
   HORIZON_RATIO,
-  STANDARD_SCALE,
   WIDTH_RATIO,
 } from "./base";
 import { DEFAULT_CHARSET, getCharset, type CharsetId } from "./charsets";
@@ -55,8 +54,10 @@ export function getConstants(scale: number, charsetId: CharsetId = DEFAULT_CHARS
   const VERTICAL_WIDTH = scale * WIDTH_RATIO;
   const VERTICAL_HEIGHT = (HEIGHT_RATIO / WIDTH_RATIO) * VERTICAL_WIDTH;
   const HORIZON_WIDTH = scale * HORIZON_RATIO;
-  const FORMAT_SCALE = scale / STANDARD_SCALE;
-  const HORIZON_SPACE = FORMAT_SCALE * HORIZON_WIDTH * 0.6;
+  // 字符间隙：与字符宽度成线性（HORIZON_SPACE = HORIZON_WIDTH = scale * HORIZON_RATIO）。
+  // 此前误用 FORMAT_SCALE(=scale/3) 参与计算导致间隙随 scale² 增长；SCALE=5 为标准值（间隙=1 字符宽），
+  // 以此为标准换算成线性关系。
+  const HORIZON_SPACE = HORIZON_WIDTH;
   const HORIZON_PADDING = HORIZON_SPACE;
   const VERTICAL_PADDING = HORIZON_PADDING;
   return {

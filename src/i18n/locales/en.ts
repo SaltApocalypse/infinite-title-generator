@@ -44,6 +44,7 @@ export default {
     overview3: "Overview 3",
     overview4: "Overview",
     placeholder: "Placeholder Overlay",
+    strokeSplit: "Stroke Split",
     limitLength: "Length Limit (14)",
   },
   page: {

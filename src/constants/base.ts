@@ -5,9 +5,6 @@ export const WIDTH_RATIO = 1.7257; // （竖直）宽比例
 export const HEIGHT_RATIO = 20.6635; // （竖直）高比例
 export const HORIZON_RATIO = 10.8934; // （水平）宽比例
 
-/** 基准尺寸（HORIZON_SPACE 计算用） */
-export const STANDARD_SCALE = 3;
-
 /**
  * 基准度量：字符集定义在 DEFAULT_SCALE 下构建，getConstants 再按 scale 统一缩放。
  * 字符集文件（charsets/*）引用这些基准值书写坐标。

@@ -145,10 +145,6 @@ export const basicChars: Record<string, TitleChar> = {
     ],
     width: HORIZON_WIDTH,
   },
-  // NOTE:
-  // E：三条横线示例
-  // - 全部横线向左偏移 0.5 * SCALE，消除与竖线连接处的开口
-  // - 中间最短横线额外 delay 0.5s 延时出现
   E: {
     vertical: [
       {
@@ -415,14 +411,6 @@ export const basicChars: Record<string, TitleChar> = {
         x2: HORIZON_WIDTH,
         y2: VERTICAL_HEIGHT,
       },
-      // {
-      //   x1: 0,
-      //   y1: 0,
-      //   x2: 0.99 * HORIZON_WIDTH,
-      //   y2: 0.975 * VERTICAL_HEIGHT,
-      //   offsetXCoef: -0.05,
-      //   offsetYCoef: -0.25,
-      // },
     ],
     width: HORIZON_WIDTH,
   },

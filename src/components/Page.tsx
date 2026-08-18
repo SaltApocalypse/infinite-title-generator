@@ -45,6 +45,8 @@ interface PageProps {
   startDelay?: number;
   /** 字符集（设置页「字体结构」选择），默认 DEFAULT_CHARSET */
   charsetId?: CharsetId;
+  /** 调试·笔画拆解：竖线纯黄、横线纯蓝、透明度固定 50%（便于查看线条结构） */
+  strokeSplit?: boolean;
 }
 
 const Page: React.FC<PageProps> = ({
@@ -54,6 +56,7 @@ const Page: React.FC<PageProps> = ({
   viewControlMode = "full",
   startDelay = DEFAULT_DELAY,
   charsetId = DEFAULT_CHARSET,
+  strokeSplit = false,
 }) => {
   // ========== DOM 引用 ==========
   const lineRefs = useRef<SVGLineElement[]>([]); // 竖线元素数组（索引与 verticalLines 对应）
@@ -118,6 +121,7 @@ const Page: React.FC<PageProps> = ({
     startDelay,
     replayKey,
     randomizeKey,
+    strokeSplit,
   });
   useHorizontalAnimation({
     horizontalLines,
@@ -125,6 +129,7 @@ const Page: React.FC<PageProps> = ({
     scale: SCALE,
     startDelay,
     replayKey,
+    strokeSplit,
   });
 
   return (

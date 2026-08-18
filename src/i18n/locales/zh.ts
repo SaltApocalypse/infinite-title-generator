@@ -44,6 +44,7 @@ export default {
     overview3: "总览3",
     overview4: "总览",
     placeholder: "占位开关",
+    strokeSplit: "笔画拆解",
     limitLength: "字符长度限制(14)",
   },
   page: {
