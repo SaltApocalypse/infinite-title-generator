@@ -24,10 +24,10 @@ export function PlaceholderOverlay({
     <>
       {placeholders.map((p, i) => (
         <g key={`ph-${i}`}>
-          {/* 声明占位单元格（char.width）：虚线轮廓，辅助检查字符间空隙 */}
+          {/* 声明占位单元格（char.width）：虚线轮廓，辅助检查字符间空隙（y 取所在行的 cellY） */}
           <rect
             x={p.cellX}
-            y={-verticalHeight / 2}
+            y={p.cellY}
             width={p.cellWidth}
             height={verticalHeight}
             fill="transparent"
@@ -47,7 +47,7 @@ export function PlaceholderOverlay({
           {/* 字符标签：单元格上方，对应关系一目了然 */}
           <text
             x={p.cellX + p.cellWidth / 2}
-            y={-verticalHeight / 2 - 6}
+            y={p.cellY - 6}
             textAnchor="middle"
             fill={theme.colors.accent}
             fontSize={scale * 2}

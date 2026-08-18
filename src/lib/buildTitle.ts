@@ -30,6 +30,8 @@ export interface PlaceholderRect {
   cellX: number;
   /** 声明占位宽度 */
   cellWidth: number;
+  /** 声明占位单元格顶部 y（整行字符格高度 = VERTICAL_HEIGHT） */
+  cellY: number;
   /** 实际占用 bbox（已按线宽 SCALE 扩展） */
   x: number;
   y: number;
@@ -188,6 +190,7 @@ export function buildTitleLines(input: BuildTitleInput): BuildTitleResult {
         char: ch,
         cellX: lineX,
         cellWidth: char.width,
+        cellY: rowY,
         x: pMinX - pad,
         y: pMinY - pad,
         width: pMaxX - pMinX + SCALE,
@@ -246,6 +249,7 @@ export function buildTitleLines(input: BuildTitleInput): BuildTitleResult {
     h.y2 -= contentCenterY;
   });
   placeholders.forEach((p) => {
+    p.cellY -= contentCenterY;
     p.y -= contentCenterY;
   });
 
