@@ -17,6 +17,13 @@ export default {
   settings: {
     language: "语言",
     viewControls: "视图控制",
+    font: "字体结构",
+  },
+  font: {
+    modes: {
+      basic: "基本",
+      optimized: "优化",
+    },
   },
   view: {
     modes: {

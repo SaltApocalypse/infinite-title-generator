@@ -17,6 +17,13 @@ export default {
   settings: {
     language: "Language",
     viewControls: "View Controls",
+    font: "Font Structure",
+  },
+  font: {
+    modes: {
+      basic: "Basic",
+      optimized: "Optimized",
+    },
   },
   view: {
     modes: {

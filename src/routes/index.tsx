@@ -24,7 +24,10 @@ import {
   LSFTooltip,
 } from "../components/ui";
 import { type ViewControlMode } from "../components/ZoomableCanvas";
+import type { CharsetId } from "../constants";
 import {
+  CHARSETS,
+  DEFAULT_CHARSET,
   DEFAULT_DELAY,
   DEFAULT_SCALE,
   MAX_DELAY,
@@ -32,7 +35,7 @@ import {
   MIN_DELAY,
   MIN_SCALE,
   SAMPLE,
-} from "../constants/constants";
+} from "../constants";
 import { changeLanguage, getCurrentLang, type Lang, LANGUAGES } from "../i18n";
 
 export const Route = createFileRoute("/")({
@@ -64,6 +67,8 @@ function RouteComponent() {
   const [limitLength, setLimitLength] = useState(true);
   // 视图控制模式：设置页下拉选择（完整/精简[暂禁用]/无），控制右上角视图控制浮层
   const [viewControlMode, setViewControlMode] = useState<ViewControlMode>("full");
+  // 字体结构（字符集）：设置页下拉选择（基本/优化[暂未开放]），默认基本
+  const [charsetId, setCharsetId] = useState<CharsetId>(DEFAULT_CHARSET);
 
   // 视图控制选项：完整（默认）/ 精简（暂未开放，禁用）/ 无
   const viewControlOptions: LSFDropdownOption[] = [
@@ -71,6 +76,13 @@ function RouteComponent() {
     { value: "compact", label: t("view.modes.compact"), disabled: true },
     { value: "none", label: t("view.modes.none") },
   ];
+
+  // 字体结构选项：由字符集注册表生成（优化集暂为占位，字形完成后再开放）
+  const fontOptions: LSFDropdownOption[] = CHARSETS.map((set) => ({
+    value: set.id,
+    label: t(set.labelKey),
+    disabled: set.id !== "basic",
+  }));
 
   useEffect(() => {
     if (debounceTimer.current) {
@@ -193,6 +205,16 @@ function RouteComponent() {
       content: (
         <div className="w-full">
           <h2 className="mb-4 text-base font-semibold text-primary">{t("tabs.settings")}</h2>
+          {/* 设置项列表：字体结构（基本/优化[暂未开放]） */}
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <span className="text-sm text-base-content">{t("settings.font")}</span>
+            <LSFDropdown
+              className="w-28"
+              value={charsetId}
+              options={fontOptions}
+              onChange={(value) => setCharsetId(value as CharsetId)}
+            />
+          </div>
           {/* 设置项列表：视图控制（完整/精简[暂禁用]/无） */}
           <div className="mb-4 flex items-center justify-between gap-3">
             <span className="text-sm text-base-content">{t("settings.viewControls")}</span>
@@ -257,6 +279,7 @@ function RouteComponent() {
                   <li>设置 &gt; 视图控制 &gt; 精简视图</li>
                   <li>导出功能</li>
                   <li>骷髅头实现</li>
+                  <li>字体结构优化</li>
                 </ul>
               </div>
             ),
@@ -329,6 +352,7 @@ function RouteComponent() {
         showPlaceholders={showPlaceholders}
         viewControlMode={viewControlMode}
         startDelay={delay}
+        charsetId={charsetId}
       />
       <LSFSidebar tabs={tabs} defaultTabId="title" />
     </div>
