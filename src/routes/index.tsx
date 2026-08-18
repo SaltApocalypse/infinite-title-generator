@@ -31,6 +31,7 @@ import {
   DEFAULT_DELAY,
   DEFAULT_SCALE,
   MAX_DELAY,
+  MAX_LINES,
   MAX_SCALE,
   MIN_DELAY,
   MIN_SCALE,
@@ -67,6 +68,10 @@ function RouteComponent() {
   const [strokeSplit, setStrokeSplit] = useState(false);
   // 调试：是否启用输入字符长度限制（默认开启 ≤14，关闭后无限输入）
   const [limitLength, setLimitLength] = useState(true);
+  // 调试：是否启用多行输入行数限制（默认开启 ≤MAX_LINES 行，关闭后不限行数）
+  const [limitLines, setLimitLines] = useState(true);
+  // 标题输入框行数：随输入行数动态变化（至少 1 行，最多 6 行，超出滚动）
+  const inputRows = Math.min(Math.max(input.split("\n").length, 1), 6);
   // 视图控制模式：设置页下拉选择（完整/精简[暂禁用]/无），控制右上角视图控制浮层
   const [viewControlMode, setViewControlMode] = useState<ViewControlMode>("full");
   // 字体结构（字符集）：设置页下拉选择（基本/优化[暂未开放]），默认基本
@@ -110,13 +115,15 @@ function RouteComponent() {
           <div className="flex items-center justify-between gap-3">
             <span className="flex items-center gap-1.5 text-sm text-base-content">
               {t("page.inputLabel")}
-              {/* 标题规则提示：hover info 显示，朝右下 */}
+              {/* 标题规则提示：hover info 显示，朝右下，内容居左 */}
               <LSFTooltip
                 position="right"
+                align="left"
                 content={
                   <span className="block whitespace-nowrap">
                     <span className="block">{t("page.titleRuleChars")}</span>
                     <span className="block">{t("page.titleRuleLength")}</span>
+                    <span className="block">{t("page.titleRuleLines")}</span>
                   </span>
                 }
               >
@@ -125,17 +132,28 @@ function RouteComponent() {
             </span>
             <div className="flex items-center gap-2">
               <LSFInput
+                multiline
+                rows={inputRows}
                 value={input}
                 onChange={(e) => {
-                  // 仅允许英文字母和数字，小写自动转大写；限制开关开启时长度 ≤ 14
-                  let cleaned = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+                  // 仅允许英文字母和数字（小写自动转大写）与换行；连续换行合并（空行由布局层过滤）；
+                  // 长度限制开关开启时每行 ≤ 14；行数限制开关开启时 ≤ MAX_LINES 行
+                  let cleaned = e.target.value
+                    .toUpperCase()
+                    .replace(/[^A-Z0-9\n]/g, "")
+                    .replace(/\n+/g, "\n");
                   if (limitLength) {
-                    cleaned = cleaned.slice(0, 14);
+                    cleaned = cleaned
+                      .split("\n")
+                      .map((line) => line.slice(0, 14))
+                      .join("\n");
+                  }
+                  if (limitLines) {
+                    cleaned = cleaned.split("\n").slice(0, MAX_LINES).join("\n");
                   }
                   setInput(cleaned);
                 }}
                 placeholder={t("page.inputPlaceholder")}
-                maxLength={limitLength ? 14 : undefined}
                 className="w-40 xl:w-56"
               />
               <LSFLightButton onClick={() => setInput(SAMPLE)} aria-label={t("page.inputReset")}>
@@ -276,7 +294,6 @@ function RouteComponent() {
                 <h2 className="mb-2 text-base font-semibold text-primary">{t("tabs.plan")}</h2>
                 {/* NOTE: 更新计划列表为写死文本，不做 i18n（需求要求） */}
                 <ul className="list-disc space-y-1 pl-5 text-sm text-base-content">
-                  <li>主页 &gt; 标题 &gt; 多行输入支持</li>
                   <li>设置 &gt; 视图控制 &gt; 精简视图</li>
                   <li>导出功能</li>
                   <li>骷髅头实现</li>
@@ -294,28 +311,13 @@ function RouteComponent() {
                 <h2 className="mb-2 text-base font-semibold text-primary">{t("tabs.debug")}</h2>
                 {/* 快捷调试：小标题（同 主页→标题/文本尺寸 样式） */}
                 <span className="mb-2 block text-sm text-base-content">{t("debug.quick")}</span>
-                {/* 四个总览按钮：一行，各占 1/4，中间留 gap；总览(第4个)暂禁用 */}
+                {/* 总览按钮：一键填入全部三行总览内容（全局总览）；宽度保持 1/4 */}
                 <div className="flex gap-2">
                   <LSFLightButton
-                    onClick={() => setInput("ABCDEFGHIJKLM")}
-                    className="flex-1 justify-center"
+                    onClick={() => setInput("ABCDEFGHIJKLM\nNOPQRSTUVWXYZ\n0123456789")}
+                    className="w-1/4 justify-center"
                   >
-                    {t("debug.overview1")}
-                  </LSFLightButton>
-                  <LSFLightButton
-                    onClick={() => setInput("NOPQRSTUVWXYZ")}
-                    className="flex-1 justify-center"
-                  >
-                    {t("debug.overview2")}
-                  </LSFLightButton>
-                  <LSFLightButton
-                    onClick={() => setInput("0123456789")}
-                    className="flex-1 justify-center"
-                  >
-                    {t("debug.overview3")}
-                  </LSFLightButton>
-                  <LSFLightButton disabled className="flex-1 justify-center">
-                    {t("debug.overview4")}
+                    {t("debug.overview")}
                   </LSFLightButton>
                 </div>
                 {/* 占位开关：画布字符占位辅助 */}
@@ -328,10 +330,15 @@ function RouteComponent() {
                   <span className="text-sm text-base-content">{t("debug.strokeSplit")}</span>
                   <LSFToggle checked={strokeSplit} onChange={setStrokeSplit} />
                 </div>
-                {/* 字符长度限制开关：关闭后无限输入 */}
+                {/* 字符长度限制开关：关闭后每行可无限输入 */}
                 <div className="mt-2 flex items-center justify-between gap-3">
                   <span className="text-sm text-base-content">{t("debug.limitLength")}</span>
                   <LSFToggle checked={limitLength} onChange={setLimitLength} />
+                </div>
+                {/* 行数限制开关：关闭后不限输入行数 */}
+                <div className="mt-2 flex items-center justify-between gap-3">
+                  <span className="text-sm text-base-content">{t("debug.limitLines")}</span>
+                  <LSFToggle checked={limitLines} onChange={setLimitLines} />
                 </div>
                 {/* 基本信息：小标题 */}
                 <span className="mb-2 mt-4 block text-sm text-base-content">

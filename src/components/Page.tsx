@@ -84,6 +84,7 @@ const Page: React.FC<PageProps> = ({
     HORIZON_SPACE,
     HORIZON_PADDING,
     VERTICAL_PADDING,
+    VERTICAL_SPACE,
     TITLE_CHARS,
   } = useMemo(() => getConstants(scale, charsetId), [scale, charsetId]);
 
@@ -98,6 +99,7 @@ const Page: React.FC<PageProps> = ({
       HORIZON_SPACE,
       HORIZON_PADDING,
       VERTICAL_PADDING,
+      VERTICAL_SPACE,
     });
     setCanvas(result.canvas);
     return result;
@@ -110,6 +112,7 @@ const Page: React.FC<PageProps> = ({
     HORIZON_SPACE,
     HORIZON_PADDING,
     VERTICAL_PADDING,
+    VERTICAL_SPACE,
     randomizeKey,
   ]);
 

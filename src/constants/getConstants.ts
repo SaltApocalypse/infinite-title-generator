@@ -41,6 +41,8 @@ export interface LSFConstants {
   HORIZON_SPACE: number;
   HORIZON_PADDING: number;
   VERTICAL_PADDING: number;
+  /** 多行行距（= VERTICAL_HEIGHT * 0.5） */
+  VERTICAL_SPACE: number;
   TITLE_CHARS: Record<string, TitleChar>;
 }
 
@@ -60,6 +62,8 @@ export function getConstants(scale: number, charsetId: CharsetId = DEFAULT_CHARS
   const HORIZON_SPACE = HORIZON_WIDTH;
   const HORIZON_PADDING = HORIZON_SPACE;
   const VERTICAL_PADDING = HORIZON_PADDING;
+  // 多行行距：0.5 倍字符高度（随 VERTICAL_HEIGHT 线性）
+  const VERTICAL_SPACE = VERTICAL_HEIGHT * 0.5;
   return {
     SCALE: scale,
     VERTICAL_WIDTH,
@@ -67,6 +71,7 @@ export function getConstants(scale: number, charsetId: CharsetId = DEFAULT_CHARS
     HORIZON_SPACE,
     HORIZON_PADDING,
     VERTICAL_PADDING,
+    VERTICAL_SPACE,
     TITLE_CHARS: scaleTitleChars(charset.chars, factor),
   };
 }

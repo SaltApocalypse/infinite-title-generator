@@ -7,5 +7,7 @@ export const MAX_SCALE = 10;
 export const MIN_DELAY = 0;
 export const MAX_DELAY = 2;
 export const DEFAULT_DELAY = 1;
+/** 多行输入的最大行数（调试「行数限制」开关可解除） */
+export const MAX_LINES = 3;
 /** 测试样例 */
 export const SAMPLE = "INFINITE";
