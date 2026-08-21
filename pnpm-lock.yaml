@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@salta/theme-infinite':
-        specifier: file:../salta-theme-infinite
-        version: file:../salta-theme-infinite(daisyui@5.7.17)(lucide-react@1.31.0(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwindcss@4.1.17)
+        specifier: github:SaltApocalypse/salta-theme-infinite#v0.1.0
+        version: https://codeload.github.com/SaltApocalypse/salta-theme-infinite/tar.gz/9c8031700bca98ec3a181d0e623f707d434c31b6(daisyui@5.7.17)(lucide-react@1.31.0(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwindcss@4.1.17)
       '@tailwindcss/vite':
         specifier: ^4.1.17
         version: 4.1.17(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6))
@@ -605,8 +605,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@salta/theme-infinite@file:../salta-theme-infinite':
-    resolution: {directory: ../salta-theme-infinite, type: directory}
+  '@salta/theme-infinite@https://codeload.github.com/SaltApocalypse/salta-theme-infinite/tar.gz/9c8031700bca98ec3a181d0e623f707d434c31b6':
+    resolution: {tarball: https://codeload.github.com/SaltApocalypse/salta-theme-infinite/tar.gz/9c8031700bca98ec3a181d0e623f707d434c31b6}
+    version: 0.1.0
     peerDependencies:
       daisyui: ^5
       lucide-react: '>=0.4'
@@ -2629,7 +2630,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.53.2':
     optional: true
 
-  '@salta/theme-infinite@file:../salta-theme-infinite(daisyui@5.7.17)(lucide-react@1.31.0(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwindcss@4.1.17)':
+  '@salta/theme-infinite@https://codeload.github.com/SaltApocalypse/salta-theme-infinite/tar.gz/9c8031700bca98ec3a181d0e623f707d434c31b6(daisyui@5.7.17)(lucide-react@1.31.0(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tailwindcss@4.1.17)':
     dependencies:
       daisyui: 5.7.17
       lucide-react: 1.31.0(react@19.2.0)
