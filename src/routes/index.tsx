@@ -41,9 +41,11 @@ import { changeLanguage, getCurrentLang, type Lang, LANGUAGES } from "../i18n";
 
 export const Route = createFileRoute("/")({
   // ?debug 查询参数：作为调试模式的开关（存在即开启）
-  validateSearch: (search) => ({
-    debug: search.debug === true || search.debug === "true" || search.debug === "",
-  }),
+  // 缺省（无 debug）时返回空对象，避免路由把默认的 ?debug=false 写进 URL
+  validateSearch: (search) => {
+    const debug = search.debug === true || search.debug === "true" || search.debug === "";
+    return debug ? { debug: true } : {};
+  },
   component: RouteComponent,
 });
 
@@ -57,11 +59,11 @@ function RouteComponent() {
   const [scale, setScale] = useState(DEFAULT_SCALE);
   // 延时播放（动画开始/重播/随机重播前暂停秒数）：默认 DEFAULT_DELAY
   const [delay, setDelay] = useState(DEFAULT_DELAY);
-  // 调试模式：由 ?debug 查询参数控制（个人使用，存在即显示调试页）
+  // 调试模式：由 ?debug 查询参数控制（个人使用，存在即显示调试页；缺省不写入 URL）
   const debug = useSearch({
     select: (s) => s.debug,
     from: undefined,
-  });
+  }) ?? false;
   // 调试：画布字符占位辅助开关（实际占用方块 + 声明宽度单元格轮廓）
   const [showPlaceholders, setShowPlaceholders] = useState(false);
   // 调试：笔画拆解开关（竖线纯黄、横线纯蓝、透明度固定 50%）
