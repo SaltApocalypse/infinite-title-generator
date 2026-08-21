@@ -13,17 +13,17 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import Page from "../components/Page";
-import {
-  LSFDropdown,
-  type LSFDropdownOption,
-  LSFInput,
-  LSFLightButton,
-  LSFSidebar,
-  LSFSlider,
-  LSFToggle,
-  LSFTooltip,
-} from "../components/ui";
 import { type ViewControlMode } from "../components/ZoomableCanvas";
+import {
+  Dropdown,
+  type DropdownOption,
+  Input,
+  LightButton,
+  Sidebar,
+  Slider,
+  Toggle,
+  Tooltip,
+} from "@salta/theme-infinite/components";
 import type { CharsetId } from "../constants";
 import {
   CHARSETS,
@@ -78,14 +78,14 @@ function RouteComponent() {
   const [charsetId, setCharsetId] = useState<CharsetId>(DEFAULT_CHARSET);
 
   // 视图控制选项：完整（默认）/ 精简（暂未开放，禁用）/ 无
-  const viewControlOptions: LSFDropdownOption[] = [
+  const viewControlOptions: DropdownOption[] = [
     { value: "full", label: t("view.modes.full") },
     { value: "compact", label: t("view.modes.compact"), disabled: true },
     { value: "none", label: t("view.modes.none") },
   ];
 
   // 字体结构选项：由字符集注册表生成（优化集已开放选择）
-  const fontOptions: LSFDropdownOption[] = CHARSETS.map((set) => ({
+  const fontOptions: DropdownOption[] = CHARSETS.map((set) => ({
     value: set.id,
     label: t(set.labelKey),
   }));
@@ -116,7 +116,7 @@ function RouteComponent() {
             <span className="flex items-center gap-1.5 text-sm text-base-content">
               {t("page.inputLabel")}
               {/* 标题规则提示：hover info 显示，朝右下，内容居左 */}
-              <LSFTooltip
+              <Tooltip
                 position="right"
                 align="left"
                 content={
@@ -128,10 +128,10 @@ function RouteComponent() {
                 }
               >
                 <Info className="h-3.5 w-3.5" />
-              </LSFTooltip>
+              </Tooltip>
             </span>
             <div className="flex items-center gap-2">
-              <LSFInput
+              <Input
                 multiline
                 rows={inputRows}
                 value={input}
@@ -156,16 +156,16 @@ function RouteComponent() {
                 placeholder={t("page.inputPlaceholder")}
                 className="w-40 xl:w-56"
               />
-              <LSFLightButton onClick={() => setInput(SAMPLE)} aria-label={t("page.inputReset")}>
+              <LightButton onClick={() => setInput(SAMPLE)} aria-label={t("page.inputReset")}>
                 <RotateCcw className="h-3.5 w-3.5" />
-              </LSFLightButton>
+              </LightButton>
             </div>
           </div>
           {/* 文本尺寸行：滑块 + 重置按钮 */}
           <div className="mt-4 flex items-center justify-between gap-3">
             <span className="text-sm text-base-content">{t("page.textSize")}</span>
             <div className="flex items-center gap-2">
-              <LSFSlider
+              <Slider
                 value={scale}
                 min={MIN_SCALE}
                 max={MAX_SCALE}
@@ -173,19 +173,19 @@ function RouteComponent() {
                 onChange={setScale}
                 className="w-40 xl:w-56"
               />
-              <LSFLightButton
+              <LightButton
                 onClick={() => setScale(DEFAULT_SCALE)}
                 aria-label={t("page.inputReset")}
               >
                 <RotateCcw className="h-3.5 w-3.5" />
-              </LSFLightButton>
+              </LightButton>
             </div>
           </div>
           {/* 延时播放行：滑块（动画开始/重播/随机重播前暂停秒数）+ 重置按钮 */}
           <div className="mt-4 flex items-center justify-between gap-3">
             <span className="text-sm text-base-content">{t("page.delayPlay")}</span>
             <div className="flex items-center gap-2">
-              <LSFSlider
+              <Slider
                 value={delay}
                 min={MIN_DELAY}
                 max={MAX_DELAY}
@@ -193,12 +193,12 @@ function RouteComponent() {
                 onChange={setDelay}
                 className="w-40 xl:w-56"
               />
-              <LSFLightButton
+              <LightButton
                 onClick={() => setDelay(DEFAULT_DELAY)}
                 aria-label={t("page.inputReset")}
               >
                 <RotateCcw className="h-3.5 w-3.5" />
-              </LSFLightButton>
+              </LightButton>
             </div>
           </div>
         </div>
@@ -227,7 +227,7 @@ function RouteComponent() {
           {/* 设置项列表：字体结构（基本/优化[暂未开放]） */}
           <div className="mb-4 flex items-center justify-between gap-3">
             <span className="text-sm text-base-content">{t("settings.font")}</span>
-            <LSFDropdown
+            <Dropdown
               className="w-28"
               value={charsetId}
               options={fontOptions}
@@ -237,7 +237,7 @@ function RouteComponent() {
           {/* 设置项列表：视图控制（完整/精简[暂禁用]/无） */}
           <div className="mb-4 flex items-center justify-between gap-3">
             <span className="text-sm text-base-content">{t("settings.viewControls")}</span>
-            <LSFDropdown
+            <Dropdown
               className="w-28"
               value={viewControlMode}
               options={viewControlOptions}
@@ -247,7 +247,7 @@ function RouteComponent() {
           {/* 设置项列表：语言（默认语言按浏览器环境，见 src/i18n） */}
           <div className="flex items-center justify-between gap-3">
             <span className="text-sm text-base-content">{t("settings.language")}</span>
-            <LSFDropdown
+            <Dropdown
               className="w-28"
               value={getCurrentLang()}
               options={LANGUAGES}
@@ -313,32 +313,32 @@ function RouteComponent() {
                 <span className="mb-2 block text-sm text-base-content">{t("debug.quick")}</span>
                 {/* 总览按钮：一键填入全部三行总览内容（全局总览）；宽度保持 1/4 */}
                 <div className="flex gap-2">
-                  <LSFLightButton
+                  <LightButton
                     onClick={() => setInput("ABCDEFGHIJKLM\nNOPQRSTUVWXYZ\n0123456789")}
                     className="w-1/4 justify-center"
                   >
                     {t("debug.overview")}
-                  </LSFLightButton>
+                  </LightButton>
                 </div>
                 {/* 占位开关：画布字符占位辅助 */}
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <span className="text-sm text-base-content">{t("debug.placeholder")}</span>
-                  <LSFToggle checked={showPlaceholders} onChange={setShowPlaceholders} />
+                  <Toggle checked={showPlaceholders} onChange={setShowPlaceholders} labels={{ on: t("toggle.on"), off: t("toggle.off") }} />
                 </div>
                 {/* 笔画拆解开关：竖线纯黄/横线纯蓝/透明度 50% */}
                 <div className="mt-2 flex items-center justify-between gap-3">
                   <span className="text-sm text-base-content">{t("debug.strokeSplit")}</span>
-                  <LSFToggle checked={strokeSplit} onChange={setStrokeSplit} />
+                  <Toggle checked={strokeSplit} onChange={setStrokeSplit} labels={{ on: t("toggle.on"), off: t("toggle.off") }} />
                 </div>
                 {/* 字符长度限制开关：关闭后每行可无限输入 */}
                 <div className="mt-2 flex items-center justify-between gap-3">
                   <span className="text-sm text-base-content">{t("debug.limitLength")}</span>
-                  <LSFToggle checked={limitLength} onChange={setLimitLength} />
+                  <Toggle checked={limitLength} onChange={setLimitLength} labels={{ on: t("toggle.on"), off: t("toggle.off") }} />
                 </div>
                 {/* 行数限制开关：关闭后不限输入行数 */}
                 <div className="mt-2 flex items-center justify-between gap-3">
                   <span className="text-sm text-base-content">{t("debug.limitLines")}</span>
-                  <LSFToggle checked={limitLines} onChange={setLimitLines} />
+                  <Toggle checked={limitLines} onChange={setLimitLines} labels={{ on: t("toggle.on"), off: t("toggle.off") }} />
                 </div>
                 {/* 基本信息：小标题 */}
                 <span className="mb-2 mt-4 block text-sm text-base-content">
@@ -367,7 +367,7 @@ function RouteComponent() {
         charsetId={charsetId}
         strokeSplit={strokeSplit}
       />
-      <LSFSidebar tabs={tabs} defaultTabId="title" />
+      <Sidebar tabs={tabs} defaultTabId="title" />
     </div>
   );
 }

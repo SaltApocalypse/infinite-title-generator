@@ -12,4 +12,4 @@ export {
 export { CHARSETS, DEFAULT_CHARSET, getCharset } from "./charsets";
 export type { CharsetId, CharsetMetrics, TitleCharSet } from "./charsets";
 export { getConstants } from "./getConstants";
-export type { LSFConstants } from "./getConstants";
+export type { DerivedConstants } from "./getConstants";

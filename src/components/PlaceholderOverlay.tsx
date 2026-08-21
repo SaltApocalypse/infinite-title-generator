@@ -1,4 +1,4 @@
-import { theme } from "../theme";
+import { theme } from "@salta/theme-infinite/tokens";
 import type { PlaceholderRect } from "../lib/buildTitle";
 
 /**

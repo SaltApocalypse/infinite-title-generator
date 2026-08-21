@@ -9,7 +9,7 @@ Halo Infinite 风格 SVG 标题动画生成器（粉丝同人实验项目）。
 - Vite + React 19（纯客户端静态 SPA，无 SSR）
 - TanStack Router（文件路由，`basepath` 挂在子路径）
 - GSAP（动画）
-- Tailwind CSS v4 + daisyUI 5（SaltsSciFi 设计系统）
+- Tailwind CSS v4 + daisyUI 5（主题与组件由 [`@salta/theme-infinite`](https://github.com/SaltApocalypse/salta-theme-infinite) 提供）
 - i18next / react-i18next（国际化）
 - lucide-react（图标）
 
@@ -34,19 +34,20 @@ pnpm fix       # eslint --fix + prettier --write
 ```text
 src/
 ├── components/
-│   ├── Page.tsx            # 核心：标题动画（SVG + GSAP）
-│   ├── ZoomableCanvas.tsx  # 可缩放/平移画布容器 + 视图控制浮层
-│   └── ui/                 # SaltsSciFi 设计系统组件（LSF* 前缀）
-├── constants/constants.ts  # 动画常量与字符设定（TITLE_CHARS）
-├── i18n/                   # i18next 配置与 en/zh 文案
-├── routes/                 # TanStack Router 文件路由
-├── theme/                  # 配色 token（与 index.css 同步）
-└── types/                  # 类型定义
+│   ├── Page.tsx              # 核心：标题动画（SVG + GSAP）
+│   ├── ZoomableCanvas.tsx    # 可缩放/平移画布容器 + 视图控制浮层
+│   └── PlaceholderOverlay.tsx# 调试：字符占位辅助
+├── constants/                # 动画常量与字符集（config/base/charsets/getConstants）
+├── hooks/                    # 两阶段动画 effect（GSAP）
+├── i18n/                     # i18next 配置与 en/zh 文案
+├── lib/                      # 纯逻辑：buildTitle / spread / animTiming
+├── routes/                   # TanStack Router 文件路由
+└── types/                    # 类型定义
 ```
 
 ## 设计系统
 
-根据项目需求打包的组件统一以 `LSF` 前缀命名。配色基于 daisyUI 5 承载，定义于 `src/index.css`，JS/SVG 侧引用 `src/theme/tokens.ts`。详见 [`docs/design-system.md`](docs/design-system.md)。
+Infinite 风格的 UI 主题与组件（`Button`/`Toggle`/`Sidebar` 等 Theme Component Set）由 [`@salta/theme-infinite`](https://github.com/SaltApocalypse/salta-theme-infinite) 提供：项目入口 CSS 引入主题，组件从 `@salta/theme-infinite/components` 导入。详见 [`docs/design-system.md`](docs/design-system.md)。
 
 ## 动画实现
 
@@ -72,7 +73,7 @@ location /infinite-title-generator/ {
 
 ## 开发约定
 
-- 组件命名统一使用 `LSF` 前缀；Lucide 图标一律以组件（Icon 版本）形式使用
+- UI 组件从 `@salta/theme-infinite/components` 导入；Lucide 图标一律以组件（Icon 版本）形式使用
 
 ## 免责声明
 

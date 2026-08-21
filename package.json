@@ -16,9 +16,10 @@
     "gsap"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "packageManager": "pnpm@10.19.0",
   "dependencies": {
+    "@salta/theme-infinite": "file:../salta-theme-infinite",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-router": "^1.136.1",
     "@tanstack/react-router-devtools": "^1.136.1",

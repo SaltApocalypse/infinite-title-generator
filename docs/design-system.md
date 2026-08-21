@@ -1,11 +1,16 @@
-# Design System — LightSciFi
+# Design System — 使用约定
 
-本设计系统为「Halo Infinite 灵感同人」项目开发。
+本项目使用 [`@salta/theme-infinite`](https://github.com/SaltApocalypse/salta-theme-infinite) 提供的 Infinite 风格 UI 主题与组件（Theme Component Set），本文档记录使用约定。
 
-## 命名约定
+## 主题
 
-- **LSF**：自定义项目组件的前缀。所有自定义组件统一以 `LSF` 开头命名（如 `LSFButton`），以标识这是本项目的风格，而非第三方/官方样式。
-- **LightSciFi**：设计系统主题名，配色 token 基于 daisyUI 承载，定义于 `src/index.css`（`@plugin "daisyui/theme"`），JS 侧镜像见 `src/theme/tokens.ts`。
+- 主题名：`infinite`（科幻淡蓝配色），由 daisyUI 承载，定义于 `@salta/theme-infinite`（`@plugin "daisyui/theme"`），JS 侧镜像见 `@salta/theme-infinite/tokens`。
+- 入口 CSS 引入方式见 `src/index.css`。
+
+## 组件
+
+- 组件（`Button` / `LightButton` / `Input` / `Slider` / `Toggle` / `Dropdown` / `Sidebar` / `Tooltip`）从 `@salta/theme-infinite/components` 导入。
+- 基础组件能力由 daisyUI 提供；本包组件在其上叠加 Infinite 视觉与动画。
 
 ## 配色
 
@@ -15,7 +20,7 @@
 
 ## 按钮 / 按钮效果
 
-- 自定义按钮组件：`LSFButton`（`src/components/ui/LSFButton.tsx`），基于 daisyUI `btn btn-primary`。
+- 按钮组件：`Button`（`@salta/theme-infinite/components`），基于 daisyUI `btn btn-primary`。
 - 边框装饰：`[ 按钮 ]` 括号风格 —— 左右贯穿竖线 + 上下两端水平“出头”；hover 时上下边缘从两端向中间连起。
 - **Hover 效果约定：所有按钮/按钮效果组件的 hover，底色叠加 10% 白色变亮**。
     - 实现方式（覆盖 daisyUI 默认暗化）：
@@ -31,4 +36,4 @@
 
 - 图标统一使用 `lucide-react`。
 - **一律以组件（Icon）形式使用，组件名使用 Icon 版本**（如 `PencilLine`、`Settings`、`Info`），以便与普通文本/内容区分，避免直接写图标名称字符串。
-- 示例：tab 按钮图标以 `<PencilLine className="h-5 w-5" />` 方式渲染，并作为 `LSFTabItem.icon` 传入。
+- 示例：tab 按钮图标以 `<PencilLine className="h-5 w-5" />` 方式渲染，并作为 `TabItem.icon` 传入（`Sidebar`）。

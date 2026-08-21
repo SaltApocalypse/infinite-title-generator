@@ -1,13 +1,12 @@
+import { LightButton, Toggle } from "@salta/theme-infinite/components";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import { LSFLightButton, LSFToggle } from "./ui";
 
 // ============================================================
 // 画布视图控制
 // - 滚轮：以光标为锚点缩放，范围 1% ~ 10000%（0.01 ~ 100 倍）
 // - 按住拖拽：平移画布
-// - 右上角视图控制浮层（与左侧浮层同风格的 LSF 组件）：
+// - 右上角视图控制浮层（与左侧浮层同风格的组件）：
 //   a. 固定画布开关：开启后禁止缩放/拖拽
 //   b. 缩放倍数（左）+ 重置按钮（右）
 //   c. 重播 / 随机重播按钮
@@ -141,7 +140,7 @@ const ZoomableCanvas: React.FC<ZoomableCanvasProps> = ({
         {children}
       </div>
 
-      {/* 视图控制浮层：与左侧浮层同风格（[] 边框 + LSF 组件），右上角 */}
+      {/* 视图控制浮层：与左侧浮层同风格（[] 边框 + 组件），右上角 */}
       {showPanel && (
         <div className="absolute right-4 top-4 z-50 w-56">
           <div className="relative bg-base-200/80 px-4 py-3 text-sm shadow-lg">
@@ -174,7 +173,11 @@ const ZoomableCanvas: React.FC<ZoomableCanvasProps> = ({
             {/* a. 固定画布开关：开启后禁止缩放/拖拽 */}
             <div className="flex items-center justify-between gap-3">
               <span className="text-sm text-base-content">{t("view.fixedCanvas")}</span>
-              <LSFToggle checked={fixed} onChange={setFixed} />
+              <Toggle
+                checked={fixed}
+                onChange={setFixed}
+                labels={{ on: t("toggle.on"), off: t("toggle.off") }}
+              />
             </div>
 
             {/* b. 缩放倍数（1%~10000%）+ 重置 */}
@@ -182,21 +185,21 @@ const ZoomableCanvas: React.FC<ZoomableCanvasProps> = ({
               <span className="text-sm tabular-nums text-base-content">
                 {Math.round(transform.zoom * 100)}%
               </span>
-              <LSFLightButton onClick={reset}>{t("view.reset")}</LSFLightButton>
+              <LightButton onClick={reset}>{t("view.reset")}</LightButton>
             </div>
 
             {/* c. 重播 / 随机重播：占满一行，各占 1/3 与 2/3，中间留小 gap */}
             {(onReplay || onRandomReplay) && (
               <div className="mt-4 flex gap-2">
                 {onReplay && (
-                  <LSFLightButton onClick={onReplay} className="flex-1 justify-center">
+                  <LightButton onClick={onReplay} className="flex-1 justify-center">
                     {t("view.replay")}
-                  </LSFLightButton>
+                  </LightButton>
                 )}
                 {onRandomReplay && (
-                  <LSFLightButton onClick={onRandomReplay} className="flex-2 justify-center">
+                  <LightButton onClick={onRandomReplay} className="flex-[2] justify-center">
                     {t("view.randomReplay")}
-                  </LSFLightButton>
+                  </LightButton>
                 )}
               </div>
             )}

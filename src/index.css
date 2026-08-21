@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 /* =====================================================================
- * 设计系统：LightSciFi（科幻淡蓝配色）
+ * 应用层样式
  *
- * 配色基于 daisyUI 5（Tailwind v4 插件）承载：
- *   1. @plugin "daisyui"        —— 引入组件/工具类；关闭内置主题（只保留自定义 LightSciFi）
- *   2. @plugin "daisyui/theme"  —— 定义 SaltaSciFi 主题 token（daisyui 编辑器同款范围）
- *   3. @theme                   —— daisyUI 未覆盖的扩展 token（按需生成，用到才输出）
+ * 主题（daisyUI token + 扩展 token + 组件类）由 @salta/theme-infinite 提供：
+ *   @import "@salta/theme-infinite";
+ * 组件类名经 @source 扫描生成。
  *
- * 配色统一以 daisyUI 主题 token 为准；JS/SVG/GSAP 侧请引用 src/theme/tokens.ts（保持同步）
+ * 本文件只保留应用页面级样式：body 基础样式、页面级背景装饰工具类。
  * ===================================================================== */
 
 @plugin "daisyui" {
@@ -16,71 +15,10 @@
   logs: false;
 }
 
-@plugin "daisyui/theme" {
-  name: "saltascifi";
-  default: true;
-  color-scheme: "dark";
+@import "@salta/theme-infinite";
 
-  /* 基础表面（深空背景） */
-  --color-base-100: #0b1120;
-  --color-base-200: #111827;
-  --color-base-300: #1f2937;
-  --color-base-content: #d7f5ff;
-
-  /* 主色：能量淡蓝 */
-  --color-primary: #3dc6ff;
-  --color-primary-content: #08101e;
-
-  /* 副色：传感器青 */
-  --color-secondary: #5eead4;
-  --color-secondary-content: #04211c;
-
-  /* 强调：电感紫 */
-  --color-accent: #818cf8;
-  --color-accent-content: #0d1024;
-
-  /* 中性 */
-  --color-neutral: #8b98a8;
-  --color-neutral-content: #0a1018;
-
-  /* 状态色 */
-  --color-info: #38bdf8;
-  --color-info-content: #082f49;
-  --color-success: #4ade80;
-  --color-success-content: #052e16;
-  --color-warning: #fbbf24;
-  --color-warning-content: #451a03;
-  --color-error: #f87171;
-  --color-error-content: #450a0a;
-
-  /* daisyUI 组件所需的形状/边框 token */
-  --radius-selector: 0.5rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.25rem;
-  --size-field: 0.25rem;
-  --border: 1px;
-  --depth: 1;
-  --noise: 0;
-}
-
-@theme {
-  /* daisyUI 主题未覆盖的扩展 token */
-  --color-primary-strong: #12a9f0;
-  /* 浮层页面切换：内容从下往上显现（与浮层滑出方向一致） */
-  --animate-lsf-page-in: lsf-page-in 0.45s ease-out;
-
-  @keyframes lsf-page-in {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
+/* 让 Tailwind 扫描 @salta/theme-infinite 组件类名（相对本 CSS 文件的路径：src/ → ../） */
+@source "../node_modules/@salta/theme-infinite/dist";
 
 @layer base {
   body {

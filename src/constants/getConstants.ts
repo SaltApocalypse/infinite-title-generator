@@ -34,7 +34,7 @@ function scaleTitleChars(
 }
 
 /** 依据 SCALE 生成的整套派生常量与字符数据 */
-export interface LSFConstants {
+export interface DerivedConstants {
   SCALE: number;
   VERTICAL_WIDTH: number;
   VERTICAL_HEIGHT: number;
@@ -50,7 +50,7 @@ export interface LSFConstants {
  * 根据 SCALE 与字符集构建动画所需常量（文本尺寸滑块绑定此值）。
  * 度量说明：字符集度量默认沿用全局度量（charset.metrics 预留，暂未接线）。
  */
-export function getConstants(scale: number, charsetId: CharsetId = DEFAULT_CHARSET): LSFConstants {
+export function getConstants(scale: number, charsetId: CharsetId = DEFAULT_CHARSET): DerivedConstants {
   const factor = scale / DEFAULT_SCALE;
   const charset = getCharset(charsetId);
   const VERTICAL_WIDTH = scale * WIDTH_RATIO;
